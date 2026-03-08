@@ -1,4 +1,41 @@
 const cardsContainer = document.getElementById("cardsContainer")
+let currentTab = "all"
+
+const filterBtnAll = document.getElementById("btnAll")
+const filterBtnOpen = document.getElementById("btnOpen")
+const filterBtnClosed = document.getElementById("btnClosed")
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  
+    filterBtnAll.classList.remove("btn", "btn-outline")
+    filterBtnAll.classList.add("btn", "btn-active", "btn-primary", "bg-blue-600")
+    
+    filterBtnOpen.classList.remove("btn-active" )
+    filterBtnOpen.classList.add("btn", "btn-outline")
+    
+    filterBtnClosed.classList.remove("btn-active" )
+    filterBtnClosed.classList.add("btn", "btn-outline")
+})
+
+function switchTab(id) {
+    console.log(id);
+    
+    filterBtnAll.classList.remove("btn-active", "btn-primary", "bg-blue-600" )
+    filterBtnAll.classList.add("btn", "btn-outline")
+    
+    filterBtnOpen.classList.remove("btn-active", "btn-primary", "bg-blue-600")
+    filterBtnOpen.classList.add("btn", "btn-outline")
+    
+    filterBtnClosed.classList.remove("btn-active", "btn-primary","bg-blue-600" )
+    filterBtnClosed.classList.add("btn", "btn-outline")
+    
+    const selected = document.getElementById(id)
+    selected.classList.remove("btn", "btn-outline")
+    selected.classList.add("btn", "btn-active", "btn-primary", "bg-blue-600")
+}
+
+
 
 
 
@@ -18,8 +55,8 @@ card.innerHTML =`
             <div><img src="./assets/Open-Status.png" alt=""></div>
            <button class="btn rounded-full bg-pink-100 text-red-400">HIGH</button>
         </div>
-        <h2 class="line-clamp-2 font-bold">Fix navigation menu on mobile devices</h2>
-        <p class="line-clamp-2 text-[#64748B]">The navigation menu doesn't collapse properly on mobile devices...</p>
+        <h2 class="line-clamp-2 font-bold">${data.title}</h2>
+        <p class="line-clamp-2 text-[#64748B]">${data.description}</p>
         <div class="flex gap-2">
             <button class=" w-15 p-0 gap-0 btn rounded-full bg-pink-100 text-red-400">
                 <span><i class="fa-solid fa-bug"></i></span>BUG</button>
