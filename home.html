@@ -7,7 +7,7 @@
 <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+<link rel="stylesheet" href="style.css">
 </head>
 <body class=" bg-blue-100 ">
 <header class="grid grid-cols-12 gap-2 max-w-[1600px] bg-white px-10">
@@ -41,18 +41,18 @@
     <main class=" ">
    <section class="px-[245px] mt-6 ">
     <div class="bg-white border-0 rounded  shadow-white ">
-        <div class="p-6">
+        <div class="p-6 filter-buttons">
             <button onclick="switchTab('btnAll')"  id="btnAll" class="btn btn-neutral btn-outline">All</button>
             <button onclick="switchTab('btnOpen')"  id="btnOpen"  class="btn btn-neutral btn-outline">Open</button>
             <button  onclick="switchTab('btnClosed')" id="btnClosed" class="btn btn-neutral btn-outline">Closed</button>
         </div>
     </div>
     <!-- issues section -->
-    <section class="bg-white rounded shadow-white border-0 mt-2 p-6">
+    <section id="issuesContainer" class="bg-white rounded shadow-white border-0 mt-2 p-6">
         <div class="grid grid-cols-12 gap-1 max-w-[1110px]">
             <div class=" col-span-1 w-10 h-10 rounded-full bg-gray-200 items-center p-2"><img src="./assets/Aperture.png" alt=""></div>
             <div class="col-span-9">
-                <h2 class="font-bold">50 Issues</h2>
+                <h2 id="totalCount" class="font-bold">50 Issues</h2>
                 <p>Track and manage your project issues</p>
             </div>
             <div class="col-span-2">

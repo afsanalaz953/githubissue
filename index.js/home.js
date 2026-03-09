@@ -1,9 +1,29 @@
 const cardsContainer = document.getElementById("cardsContainer")
-let currentTab = "all"
+let currentTab = "all";
+ let allIssues = [];  
 
 const filterBtnAll = document.getElementById("btnAll")
 const filterBtnOpen = document.getElementById("btnOpen")
 const filterBtnClosed = document.getElementById("btnClosed")
+
+
+// ai
+
+function filterAndDisplayIssues() {
+    let filteredIssues = []
+    
+    if (currentTab === 'open') {
+        filteredIssues = allIssues.filter(data => data.status === 'open')
+    } else if (currentTab === 'closed') {
+        filteredIssues = allIssues.filter(data => data.status === 'closed')
+    } else {
+        filteredIssues = allIssues // 'all' tab
+    }
+    
+    displayIssues({ data: filteredIssues });
+}
+
+
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -36,38 +56,53 @@ function switchTab(id) {
 }
 
 
-
-
-
 async function loadCards() {
     const res = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
     const data = await res.json();
     displayIssues(data);
 }
+// from ai
+
+
+
+
+
 function displayIssues(datas) {
     console.log(datas);
         datas.data.forEach(data => {
         console.log(data)
 const card = document.createElement("div")
-card.className = "bg-white shadow-2xs mt-6 p-2 rounded-2xl space-y-2"
+ let borderClass = '';
+        if (data.status === 'open') {
+            borderClass = 'status-open-card';
+        } else if (data.status === 'closed') {
+            borderClass = 'status-closed-card';
+        }
+card.className = `bg-white shadow-2xs mt-2 p-2 rounded-2xl space-y-2 ${borderClass}`.trim();
 card.innerHTML =`
-<div class="flex gap-6 justify-between">
-            <div><img src="./assets/Open-Status.png" alt=""></div>
-           <button class="btn rounded-full bg-pink-100 text-red-400">HIGH</button>
+<div class="bg-white rounded-xl ">
+<div class="flex gap-6 justify-between ">
+            <div>
+                    ${data.status === 'open' 
+                        ? '<img src="./assets/Open-Status.png" alt="Open" class="w-5 h-5">' 
+                        : '<img src= "./assets/Closed- Status .png" alt="Closed" class="w-5 h-5">'
+                    }
+                </div>
+           <button class="btn rounded-full ${getPriorityClasses(data.priority)}">
+            ${data.priority.toUpperCase()}</button>
         </div>
         <h2 class="line-clamp-2 font-bold">${data.title}</h2>
         <p class="line-clamp-2 text-[#64748B]">${data.description}</p>
-        <div class="flex gap-2">
+        <div class="flex gap-2 labels-container">
             <button class=" w-15 p-0 gap-0 btn rounded-full bg-pink-100 text-red-400">
                 <span><i class="fa-solid fa-bug"></i></span>BUG</button>
             <button class="w-30 p-0 btn rounded-full bg-pink-100 text-red-400"> <span><i class="fa-solid fa-life-ring"></i></span>
                 help wanted</button>
         </div>
         <div><hr></div>
-        <div>
-            <p class=" text-[#64748B]">#1
-by john_doe</p>
-            <p class=" text-[#64748B]">1/15/2024</p>
+        <div class="gap-2">
+        <p class=" text-[#64748B]">#${data.id} <span>by ${data.author}</span></p>
+       <p class=" text-[#64748B]">${data.createdAt}</p>
         </div>
         </div>
 `
@@ -75,3 +110,17 @@ by john_doe</p>
 })
 }
 loadCards();
+
+
+function getPriorityClasses(priority) {
+  const classes = {
+    'high': 'bg-pink-100 text-red-400',
+    'medium': 'bg-yellow-100 text-yellow-600',
+    'low': 'bg-green-100 text-green-600'
+  };
+  
+  return classes[priority.toLowerCase()] || 'bg-gray-100 text-gray-600';
+}
+
+
+
