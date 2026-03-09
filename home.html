@@ -97,20 +97,43 @@ by john_doe</p>
      </section>
 </section>
 
-    </main>
-<div class="modal" role="dialog">
-    <div class="modal-box max-w-3xl">
-        <div id="modalContent">
-            <!-- Dynamic content will be loaded here -->
-        </div>
-        <div class="modal-action">
-            <label for="my_modal_7" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</label>
-        </div>
+<!-- Open the modal using ID.showModal() method -->
+<button class="btn" onclick="modalContent.showModal(dataId)">open modal</button>
+<dialog id="modalContent" class="modal">
+  <div class="modal-box">
+    <h2 class="text-lg font-bold">Hello!</h2>
+    <div class="flex gap-2">
+        <button class="modalStatus rounded-2xl p-2"></button>
+        <ul class="flex gap-2">
+            <li>Opened by Fahim Ahmed</li>
+            <li>22/02/2026</li>
+        </ul>
     </div>
-    <label class="modal-backdrop" for="my_modal_7">Close</label>
-</div>
+    <div>
+        <button class="bugButton"></button>
+        <button class="helpButton"></button>
+    </div>
+     <p class="py-4 line-clamp-2">Press ESC key or click the button below to close</p>
+     <div>
+        <div>
+            <p></p>
+            <h3></h3>
+        </div>
+        <div>
+            <p></p>
+            <button></button>
+        </div>
+     </div>
+    <div class="modal-action">
+      <form method="dialog">
+        <!-- if there is a button in form, it will close the modal -->
+        <button class="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
 
-
+    </main>
 
 
 

@@ -80,8 +80,19 @@ async function loadCards() {
     displayIssues(data);
 }
 // modal start
+// async function openModal() {
+//     const res = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
+//     const data = await res.json();
+//      allIssues = data.data;
 
+  async function openCardModal (issueId) {
+    const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issue/${issueId}`)
+    const data = await res.json();
 
+    console.log(issueId, "issueId");
+     modalContent.showModal();
+  }   
+  
 
 
 
@@ -101,7 +112,7 @@ const card = document.createElement("div")
         }
 card.className = `bg-white shadow-2xs mt-2 p-2 rounded-2xl space-y-2 ${borderClass}`.trim();
 card.innerHTML =`
-<div class="bg-white rounded-xl ">
+<div class="bg-white rounded-xl" onclick="openCardModal(${data.id})">
 <div class="flex gap-6 justify-between ">
             <div>
                     ${data.status === 'open' 
@@ -128,7 +139,6 @@ card.innerHTML =`
         </div>
 `
 
-card.addEventListener('click', () => openIssueModal(data));
  cardsContainer.appendChild(card);
 })
 }
