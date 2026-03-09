@@ -5,19 +5,25 @@ let currentTab = "all";
 const filterBtnAll = document.getElementById("btnAll")
 const filterBtnOpen = document.getElementById("btnOpen")
 const filterBtnClosed = document.getElementById("btnClosed")
+const totalCountElement = document.getElementById("totalCount")
+const openAvatar = document.getElementById("openAvatar")
+const closedAvatar = document.getElementById("closedAvatar")
 
 
-// ai
+
 
 function filterAndDisplayIssues() {
     let filteredIssues = []
     
     if (currentTab === 'open') {
         filteredIssues = allIssues.filter(data => data.status === 'open')
+        totalCountElement.innerText = filteredIssues.length + ' Issues';
     } else if (currentTab === 'closed') {
         filteredIssues = allIssues.filter(data => data.status === 'closed')
+        totalCountElement.innerText = filteredIssues.length + ' Issues';
     } else {
         filteredIssues = allIssues // 'all' tab
+         totalCountElement.innerText = filteredIssues.length + ' Issues';
     }
     
     displayIssues({ data: filteredIssues });
@@ -53,15 +59,27 @@ function switchTab(id) {
     const selected = document.getElementById(id)
     selected.classList.remove("btn", "btn-outline")
     selected.classList.add("btn", "btn-active", "btn-primary", "bg-blue-600")
+
+    if (id === 'btnAll') {
+        currentTab = 'all';
+    } else if (id === 'btnOpen') {
+        currentTab = 'open';
+    } else if (id === 'btnClosed') {
+        currentTab = 'closed';
+    }
+
+    
+     filterAndDisplayIssues(); 
 }
 
 
 async function loadCards() {
     const res = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
     const data = await res.json();
+     allIssues = data.data;
     displayIssues(data);
 }
-// from ai
+
 
 
 
