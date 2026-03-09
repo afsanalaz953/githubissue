@@ -9,6 +9,15 @@ const totalCountElement = document.getElementById("totalCount")
 const openAvatar = document.getElementById("openAvatar")
 const closedAvatar = document.getElementById("closedAvatar")
 const modalContent = document.getElementById("modalContent")
+const modalTitle = document.getElementById("modalTitle")
+const modalStatus = document.getElementById("modalStatus")
+const modalAuthor = document.getElementById("modalAuthor")
+const modalDate = document.getElementById("modalDate")
+const modalDescription = document.getElementById("modalDescription");
+const modalAssignee = document.getElementById("modalAssignee");
+const modalPriority = document.getElementById("modalPriority");
+const bugButton = document.getElementById("bugButton");
+const helpButton = document.getElementById("helpButton");
 
 
 
@@ -80,16 +89,43 @@ async function loadCards() {
     displayIssues(data);
 }
 // modal start
-// async function openModal() {
-//     const res = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
-//     const data = await res.json();
-//      allIssues = data.data;
-
   async function openCardModal (issueId) {
     const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issue/${issueId}`)
     const data = await res.json();
-
+    const modalDetails = data.data
     console.log(issueId, "issueId");
+    modalTitle.textContent = modalDetails.title
+    modalStatus.textContent = modalDetails.status
+
+    const date = new Date(data.createdAt);
+    const formattedDate = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+     modalAuthor.textContent = `Opened by ${modalDetails.author}`
+    modalDate.textContent = modalDetails.formattedDate;
+    modalDescription.textContent = modalDetails.description;
+    modalAssignee.textContent = modalDetails.assignee, `${modalDetails.author}`;
+    modalPriority.textContent = modalDetails.priority 
+
+modalPriority.className = "px-4 py-1 rounded-2xl capitalize";
+    if (modalDetails.priority === "high") {
+      modalPriority.classList.add("bg-red-400", "text-white");
+    } else if (modalDetails.priority === "medium") {
+      modalPriority.classList.add("bg-yellow-400", "text-black", "p-200", "font-bold", "text-2xl");
+    } else if (modalDetails.priority === "low") {
+      modalPriority.classList.add("bg-green-400", "text-black");
+    }
+ bugButton.classList.add("hidden");
+    helpButton.classList.add("hidden");
+    
+    if (modalDetails.labels && modalDetails.labels.length > 0) {
+      modalDetails.labels.forEach(label => {
+        if (label.toLowerCase() === "bug") {
+          bugButton.classList.remove("hidden");
+        } else if (label.toLowerCase() === "help wanted") {
+          helpButton.classList.remove("hidden");
+        }
+      });
+    }
+    
      modalContent.showModal();
   }   
   
