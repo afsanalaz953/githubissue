@@ -8,7 +8,7 @@ const filterBtnClosed = document.getElementById("btnClosed")
 const totalCountElement = document.getElementById("totalCount")
 const openAvatar = document.getElementById("openAvatar")
 const closedAvatar = document.getElementById("closedAvatar")
-
+const modalContent = document.getElementById("modalContent")
 
 
 
@@ -79,6 +79,9 @@ async function loadCards() {
      allIssues = data.data;
     displayIssues(data);
 }
+// modal start
+
+
 
 
 
@@ -124,6 +127,8 @@ card.innerHTML =`
         </div>
         </div>
 `
+
+card.addEventListener('click', () => openIssueModal(data));
  cardsContainer.appendChild(card);
 })
 }
