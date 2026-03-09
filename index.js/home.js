@@ -1,4 +1,7 @@
 const cardsContainer = document.getElementById("cardsContainer")
+
+
+
 let currentTab = "all";
  let allIssues = [];  
 
